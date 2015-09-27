@@ -1,3 +1,12 @@
+# Fermat primality test
+def prime(num):
+    fpt = lambda p: True if p != 0 and 571 ** (p - 1) % p == 1 else False
+
+    if num % 2 == 0:
+        return True
+    else:
+        return fpt(num)
+
 def factorize(num):
     amic = {
         'number'   : num,
@@ -26,9 +35,6 @@ def factorize(num):
 
 
 def amic(num):
-    # Fermat primality test
-    prime = lambda p: True if p != 0 and 571 ** (p - 1) % p == 1 else False
-
     if not prime(num):
         alice = factorize(num)
         if not prime(alice['pair']):
