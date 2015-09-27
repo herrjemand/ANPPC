@@ -1,1 +1,2 @@
-ANPPC - Amicable Numbers Python Parallel Calculator
+# ANPPC
+Amicable Numbers Python Parallel Calculator
