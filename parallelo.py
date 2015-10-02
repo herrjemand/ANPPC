@@ -1,17 +1,31 @@
 from amic import *
 from time import time
-import multiprocessing
+import multiprocessing, json
 from multiprocessing import Pool
+
+limit = 10 ** 6
+
+print('Searching for amicable numbers within next ', limit)
+
 start = time()
-z = ''
+
 poolsize = multiprocessing.cpu_count()
 
-def f(x):
-    if not prime(x):
-        return x
+amicables = {}
+
+initPrimesCache(limit)
 
 with Pool(poolsize) as p:
-    z = [x for x in p.map(f,[i for i in range(0, 30000)]) if x is not None]
+    temp = p.map(amic, [i for i in range(0, limit)])
+
+    for am in [t for t in temp if t != {}]:
+        amicables.update(am)
+
 
 stop = time()
 print(stop - start)
+
+print('Found', len(amicables), 'amicable numbers')
+
+with open('cache.' + str(limit) + '.json', 'w') as w:
+    w.write(json.dumps(amicables))
