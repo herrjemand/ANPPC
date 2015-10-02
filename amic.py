@@ -1,11 +1,13 @@
-# Fermat primality test
-def prime(num):
-    fpt = lambda p: True if p != 0 and 571 ** (p - 1) % p == 1 else False
+from eratosthenes import *
 
-    if num % 2 == 0:
-        return True
-    else:
-        return fpt(num)
+primes = []
+
+def initPrimesCache(limit):
+    global primes
+    primes = SOE(limit)
+
+def prime(num):
+    return num in primes
 
 def factorize(num):
     amic = {
@@ -29,6 +31,7 @@ def factorize(num):
     for divider in range(start, stop + 1, step):
         if num % divider == 0:
             amic['dividers'].append(divider)
+
     amic['pair'] = sum(amic['dividers'])
 
     return amic
@@ -39,9 +42,11 @@ def amic(num):
         alice = factorize(num)
         if not prime(alice['pair']):
             bob = factorize(alice['pair'])
-            if alice['number'] == bob['pair'] and bob['number'] == alice['pair']:
+            if alice['number'] == bob['pair'] and bob['number'] == alice['pair'] and alice['number'] != alice['pair']:
                 return { alice['number']: alice['dividers'], bob['number']: bob['dividers'] }
             else:
-                return None
+                return {}
         else:
-            return None
+            return {}
+    else:
+        return {}
